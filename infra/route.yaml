@@ -1,0 +1,17 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: my-photo-album
+  namespace: YOUR_NAMESPACE
+spec:
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: my-photo-album
+  # Enable https on your Route
+  tls:
+    # Tell OpenShift to terminate https for you, so the Deployment doesn't have to handle certificates.
+    termination: edge
+    # Redirect clients from http://<foobar> to https://<foobar> (best practice).
+    insecureEdgeTerminationPolicy: Redirect

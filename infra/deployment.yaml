@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-photo-album
+  namespace: YOUR_NAMESPACE
+spec:
+  # Tell Deployment how to find its Pod(s)
+  selector:
+    matchLabels:
+      app: my-photo-album
+  template:
+    # Label Pod(s) so Deployment can find them
+    metadata:
+      labels:
+        app: my-photo-album
+    spec:
+      containers:
+      - name: photo-album
+        # Use the internal hostname for the image registry
+        image: image-registry.openshift-image-registry.svc.cluster.local:5000/YOUR_NAMESPACE/my-photo-album:latest
+        # Enable DEBUG logging on the static web server
+        env:
+        - name: DEBUG
+          value: "true"
+        # Specify upper and lower bounds for resource consumption
+        resources:
+          limits:
+            cpu: 300m
+            memory: 256Mi
+          requests:
+            cpu: 0m
+            memory: 0Mi
