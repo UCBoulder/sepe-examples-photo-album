@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Test Build
+    name: Build Image
     steps:
       - name: Check out repo
         uses: actions/checkout@v2
@@ -15,11 +15,11 @@ jobs:
       - name: Attempt to build image
         run: |
           cd sources
-          podman build -t photo-album
+          podman build -t photo-album .
 
   publish:
     runs-on: ubuntu-latest
-    name: Test Build
+    name: Push Image to GH Packages
     steps:
       # GitHub Packages struggles with the capitals in the UCBoulder org name
       - name: Downcase repo path
