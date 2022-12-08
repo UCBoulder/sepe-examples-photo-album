@@ -1,0 +1,32 @@
+name: Build and Publish
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Test Build
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v2
+
+      - name: Attempt to build image
+        run: |
+          cd sources
+          podman build -t photo-album
+
+  publish:
+    runs-on: ubuntu-latest
+    name: Test Build
+    steps:
+      # GitHub Packages struggles with the capitals in the UCBoulder org name
+      - name: Downcase repo path
+        run: |
+          echo "REPO=ghcr.io/${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
+
+      - name: Push image to GH packages
+        run: |
+          podman login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+          podman push photo-album ${{ env.REPO }}/photo-album:latest
