@@ -1,0 +1,18 @@
+name: Test Build
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Test Build
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v2
+
+      - name: Attempt to build image
+        run: |
+          cd sources
+          podman build .
