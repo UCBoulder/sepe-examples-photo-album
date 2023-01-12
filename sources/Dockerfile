@@ -3,7 +3,7 @@
 # web server image that will serve it.
 
 ## Begin build layer
-FROM docker.io/python:3-slim as builder
+FROM docker.io/python:3.11.0-slim as builder
 
 WORKDIR /src
 
@@ -16,7 +16,7 @@ RUN sigal build -v . /build
 
 
 ## Begin runtime layer
-FROM docker.io/halverneus/static-file-server:latest
+FROM docker.io/halverneus/static-file-server:v1.8.8
 
 # Copy static site from build layer to runtime
 COPY --from=builder /build /web

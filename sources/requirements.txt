@@ -1,1 +1,1 @@
-sigal
+sigal==2.1.1
