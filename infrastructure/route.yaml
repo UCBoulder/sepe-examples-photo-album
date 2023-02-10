@@ -3,6 +3,8 @@ kind: Route
 metadata:
   name: my-photo-album
   namespace: YOUR_NAMESPACE
+  labels:
+    app: my-photo-album
 spec:
   port:
     targetPort: 8080

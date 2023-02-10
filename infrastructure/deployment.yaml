@@ -3,6 +3,20 @@ kind: Deployment
 metadata:
   name: my-photo-album
   namespace: YOUR_NAMESPACE
+  labels:
+    app: my-photo-album
+  # Tell Deployment to update iteslf when the ImageStreamTag changes
+  annotations:
+    image.openshift.io/triggers: >-
+      [
+        {
+          "from": {
+            "kind": "ImageStreamTag",
+            "name": "imagestream-photo-album:latest"
+          },
+          "fieldPath": "spec.template.spec.containers[?(@.name==\"photo-album\")].image"
+        }
+      ]
 spec:
   # Tell Deployment how to find its Pod(s)
   selector:
@@ -16,8 +30,8 @@ spec:
     spec:
       containers:
       - name: photo-album
-        # Point directly to GH Packages
-        image: ghcr.io/ucboulder/YOUR_REPO/photo-album:latest
+        # Point to image through the ImageStreamTag
+        image: imagestream-photo-album:latest
         # Enable DEBUG logging on the static web server
         env:
         - name: DEBUG

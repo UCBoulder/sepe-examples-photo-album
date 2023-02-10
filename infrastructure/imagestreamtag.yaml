@@ -1,0 +1,13 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStreamTag
+metadata:
+  name: imagestream-photo-album:latest
+  namespace: YOUR_NAMESPACE
+tag:
+  name: latest
+  from:
+    kind: DockerImage
+    name: ghcr.io/YOUR_GITHUB_USERNAME/YOUR_GITHUB_REPO_NAME/photo-album:latest
+  importPolicy:
+    scheduled: true
+

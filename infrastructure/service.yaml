@@ -3,6 +3,8 @@ kind: Service
 metadata:
   name: my-photo-album
   namespace: YOUR_NAMESPACE
+  labels:
+    app: my-photo-album
 spec:
   ports:
   - port: 8080
